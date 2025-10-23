@@ -1,0 +1,65 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Install Dependencies",
+			"type": "shell",
+			"command": "npm run install-all",
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Start Development Servers",
+			"type": "shell",
+			"command": "npm run dev",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Start Server Only",
+			"type": "shell",
+			"command": "npm run server",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Start Client Only",
+			"type": "shell",
+			"command": "npm run client",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Docker: Start Development",
+			"type": "shell",
+			"command": "docker-compose -f docker-compose.dev.yml up --build",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Docker: Stop Development",
+			"type": "shell",
+			"command": "docker-compose -f docker-compose.dev.yml down",
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Docker: View Logs",
+			"type": "shell",
+			"command": "docker-compose -f docker-compose.dev.yml logs -f",
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "Docker: Setup Environment",
+			"type": "shell",
+			"command": "docker-setup.bat",
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}

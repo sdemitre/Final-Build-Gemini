@@ -1,0 +1,29 @@
+{
+  "name": "public-health-research-platform",
+  "version": "1.0.0",
+  "description": "A comprehensive platform for public health researchers to collaborate and share research",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "install-server": "cd server && npm install",
+    "install-client": "cd client && npm install",
+    "install-all": "npm run install-server && npm run install-client",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up --build",
+    "docker:dev:down": "docker-compose -f docker-compose.dev.yml down",
+    "docker:prod": "docker-compose up --build -d",
+    "docker:prod:down": "docker-compose down",
+    "docker:build": "docker build -t ph-research-platform .",
+    "docker:build:dev": "docker build -f Dockerfile.dev -t ph-research-platform:dev .",
+    "docker:logs": "docker-compose logs -f",
+    "docker:clean": "docker system prune -f && docker volume prune -f"
+  },
+  "keywords": ["public health", "research", "collaboration", "peer review"],
+  "author": "Public Health Research Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

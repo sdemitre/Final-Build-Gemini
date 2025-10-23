@@ -1,0 +1,80 @@
+2025-10-21T00:54:00.5728095-04:00 	 FULL RUN START
+2025-10-21T00:54:00.5794329-04:00 	 KILL stray node processes (react-scripts/server)
+2025-10-21T00:54:00.7497181-04:00 	 NO client .cache
+2025-10-21T00:54:00.7525077-04:00 	 RUNNING npm ci (bundled)
+2025-10-21T00:54:43.6415312-04:00 	 npm ci exit:1
+2025-10-21T00:54:43.6596247-04:00 	 npm-ci: npm.cmd : npm WARN deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out 
+2025-10-21T00:54:43.6616271-04:00 	 npm-ci: lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and 
+2025-10-21T00:54:43.6912856-04:00 	 npm-ci: powerful.
+2025-10-21T00:54:43.7098128-04:00 	 npm-ci: At C:\Users\stoure\Final Build\full_run.ps1:21 char:53
+2025-10-21T00:54:43.7279207-04:00 	 npm-ci: + ... m){ Log 'RUNNING npm ci (bundled)'; & $npm ci *> $npmLog 2>&1; $ec=$L ...
+2025-10-21T00:54:43.7456869-04:00 	 npm-ci: +                                         ~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-10-21T00:54:43.7713983-04:00 	 npm-ci:     + CategoryInfo          : NotSpecified: (npm WARN deprec...e and powerful.:String) [], RemoteException
+2025-10-21T00:54:43.7914218-04:00 	 npm-ci:     + FullyQualifiedErrorId : NativeCommandError
+2025-10-21T00:54:43.8156621-04:00 	 npm-ci:  
+2025-10-21T00:54:43.8407027-04:00 	 npm-ci: npm WARN deprecated @babel/plugin-proposal-private-methods@7.18.6: This proposal has been merged to the ECMAScript standard 
+2025-10-21T00:54:43.8639097-04:00 	 npm-ci: and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-methods instead.
+2025-10-21T00:54:43.8883555-04:00 	 npm-ci: npm WARN deprecated @babel/plugin-proposal-nullish-coalescing-operator@7.18.6: This proposal has been merged to the 
+2025-10-21T00:54:43.9139375-04:00 	 npm-ci: ECMAScript standard and thus this plugin is no longer maintained. Please use 
+2025-10-21T00:54:43.9390408-04:00 	 npm-ci: @babel/plugin-transform-nullish-coalescing-operator instead.
+2025-10-21T00:54:43.9636583-04:00 	 npm-ci: npm WARN deprecated @babel/plugin-proposal-numeric-separator@7.18.6: This proposal has been merged to the ECMAScript 
+2025-10-21T00:54:43.9893269-04:00 	 npm-ci: standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-numeric-separator instead.
+2025-10-21T00:54:44.0156775-04:00 	 npm-ci: npm WARN deprecated @babel/plugin-proposal-class-properties@7.18.6: This proposal has been merged to the ECMAScript 
+2025-10-21T00:54:44.0441393-04:00 	 npm-ci: standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.
+2025-10-21T00:54:44.0712422-04:00 	 npm-ci: npm WARN deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+2025-10-21T00:54:44.0984027-04:00 	 npm-ci: npm WARN deprecated stable@0.1.8: Modern JS already guarantees Array#sort() is a stable sort, so this library is 
+2025-10-21T00:54:44.1244379-04:00 	 npm-ci: deprecated. See the compatibility table on MDN: 
+2025-10-21T00:54:44.1515111-04:00 	 npm-ci: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility
+2025-10-21T00:54:44.1775580-04:00 	 npm-ci: npm WARN deprecated @babel/plugin-proposal-private-property-in-object@7.21.11: This proposal has been merged to the 
+2025-10-21T00:54:44.2041224-04:00 	 npm-ci: ECMAScript standard and thus this plugin is no longer maintained. Please use 
+2025-10-21T00:54:44.2306895-04:00 	 npm-ci: @babel/plugin-transform-private-property-in-object instead.
+2025-10-21T00:54:44.2567114-04:00 	 npm-ci: npm WARN deprecated @babel/plugin-proposal-optional-chaining@7.21.0: This proposal has been merged to the ECMAScript 
+2025-10-21T00:54:44.2835595-04:00 	 npm-ci: standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.
+2025-10-21T00:54:44.3096063-04:00 	 npm-ci: npm WARN deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-10-21T00:54:44.3390735-04:00 	 npm-ci: npm WARN deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-10-21T00:54:44.3661584-04:00 	 npm-ci: npm WARN deprecated rollup-plugin-terser@7.0.2: This package has been deprecated and is no longer maintained. Please use 
+2025-10-21T00:54:44.3916961-04:00 	 npm-ci: @rollup/plugin-terser
+2025-10-21T00:54:44.4184527-04:00 	 npm-ci: npm WARN deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+2025-10-21T00:54:44.4453947-04:00 	 npm-ci: npm WARN deprecated q@1.5.1: You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript 
+2025-10-21T00:54:44.4714983-04:00 	 npm-ci: developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank 
+2025-10-21T00:54:44.4979719-04:00 	 npm-ci: you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+2025-10-21T00:54:44.5247152-04:00 	 npm-ci: npm WARN deprecated 
+2025-10-21T00:54:44.5534629-04:00 	 npm-ci: npm WARN deprecated (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
+2025-10-21T00:54:44.5812977-04:00 	 npm-ci: npm WARN deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-10-21T00:54:44.6103548-04:00 	 npm-ci: npm WARN deprecated domexception@2.0.1: Use your platform's native DOMException instead
+2025-10-21T00:54:44.6365153-04:00 	 npm-ci: npm WARN deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+2025-10-21T00:54:44.6639016-04:00 	 npm-ci: npm WARN deprecated w3c-hr-time@1.0.2: Use your platform's native performance.now() and performance.timeOrigin.
+2025-10-21T00:54:44.7004630-04:00 	 npm-ci: npm WARN deprecated source-map@0.8.0-beta.0: The work that was done in this beta branch won't be included in future versions
+2025-10-21T00:54:44.7197071-04:00 	 npm-ci: npm WARN deprecated workbox-cacheable-response@6.6.0: workbox-background-sync@6.6.0
+2025-10-21T00:54:44.7462663-04:00 	 npm-ci: npm WARN deprecated workbox-google-analytics@6.6.0: It is not compatible with newer versions of GA starting with v4, as 
+2025-10-21T00:54:44.7733602-04:00 	 npm-ci: long as you are using GAv3 it should be ok, but the package is not longer being maintained
+2025-10-21T00:54:44.7994926-04:00 	 npm-ci: npm WARN deprecated svgo@1.3.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
+2025-10-21T00:54:44.8257355-04:00 	 npm-ci: npm WARN deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for 
+2025-10-21T00:54:44.8528724-04:00 	 npm-ci: other options.
+2025-10-21T00:54:44.8794592-04:00 	 npm-ci: npm ERR! code 1
+2025-10-21T00:54:44.9078225-04:00 	 npm-ci: npm ERR! path C:\Users\stoure\Final Build\client\node_modules\core-js-pure
+2025-10-21T00:54:44.9358999-04:00 	 npm-ci: npm ERR! command failed
+2025-10-21T00:54:44.9634016-04:00 	 npm-ci: npm ERR! command C:\Windows\system32\cmd.exe /d /s /c node -e "try{require('./postinstall')}catch(e){}"
+2025-10-21T00:54:44.9913974-04:00 	 npm-ci: npm ERR! 'node' is not recognized as an internal or external command,
+2025-10-21T00:54:45.0224333-04:00 	 npm-ci: npm ERR! operable program or batch file.
+2025-10-21T00:54:45.0535075-04:00 	 npm-ci: 
+2025-10-21T00:54:45.0846699-04:00 	 npm-ci: npm ERR! A complete log of this run can be found in: 
+2025-10-21T00:54:45.1137087-04:00 	 npm-ci: C:\Users\stoure\AppData\Local\npm-cache\_logs\2025-10-21T04_54_01_330Z-debug-0.log
+2025-10-21T00:54:45.1442658-04:00 	 STARTING backend
+2025-10-21T00:54:49.2575231-04:00 	 BACKEND_POLL_FAIL:0
+2025-10-21T00:54:52.2742599-04:00 	 BACKEND_POLL_FAIL:1
+2025-10-21T00:54:55.2836675-04:00 	 BACKEND_POLL_FAIL:2
+2025-10-21T00:54:58.2901303-04:00 	 BACKEND_POLL_FAIL:3
+2025-10-21T00:55:01.3083705-04:00 	 BACKEND_POLL_FAIL:4
+2025-10-21T00:55:04.3281407-04:00 	 BACKEND_POLL_FAIL:5
+2025-10-21T00:55:07.3349439-04:00 	 BACKEND_POLL_FAIL:6
+2025-10-21T00:55:10.3469353-04:00 	 BACKEND_POLL_FAIL:7
+2025-10-21T00:55:13.3659941-04:00 	 BACKEND_POLL_FAIL:8
+2025-10-21T00:55:16.3890368-04:00 	 BACKEND_POLL_FAIL:9
+2025-10-21T00:55:19.4157666-04:00 	 BACKEND_POLL_FAIL:10
+2025-10-21T00:55:22.4240188-04:00 	 BACKEND_POLL_FAIL:11
+2025-10-21T00:55:25.4455372-04:00 	 BACKEND_POLL_FAIL:12
+2025-10-21T00:55:28.4538432-04:00 	 BACKEND_POLL_FAIL:13
+2025-10-21T00:55:31.4753671-04:00 	 BACKEND_POLL_FAIL:14
+2025-10-21T00:55:32.4858276-04:00 	 STARTING frontend (npm start)
+2025-10-21T00:55:37.5247304-04:00 	 FRONT_POLL_FAIL:0
