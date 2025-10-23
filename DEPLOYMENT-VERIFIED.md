@@ -48,8 +48,8 @@
 - [x] **Live deployment URLs**: Updated in website header
 - [x] **Deployment status**: Real-time status indicators added
 
-### **✅ Enhanced User Experience**
-- [x] **Live URL display**: https://sdemitre.github.io/Final-Build/ prominently shown
+- ### **✅ Enhanced User Experience**
+- [x] **Live URL display**: https://sdemitre.github.io/Final-Build-Gemini/ prominently shown
 - [x] **Deployment badges**: Visual confirmation of live status
 - [x] **GitHub Pages branding**: Clear indication of hosting platform
 - [x] **Professional presentation**: Research-grade interface design
@@ -113,7 +113,7 @@
 ```
 🌍 Enhanced Disease Surveillance Platform
 🦠 40 Global Disease Outbreaks - Live Online
-🌐 https://sdemitre.github.io/Final-Build/
+🌐 https://sdemitre.github.io/Final-Build-Gemini/
 📊 Interactive mapping with advanced filtering
 ```
 
@@ -142,7 +142,7 @@ Best regards,
 ## 🎉 **DEPLOYMENT VERIFICATION SUMMARY**
 
 ### **✅ MISSION ACCOMPLISHED**
-- [x] **Website Successfully Deployed**: https://sdemitre.github.io/Final-Build/
+- [x] **Website Successfully Deployed**: https://sdemitre.github.io/Final-Build-Gemini/
 - [x] **40 Disease Outbreaks**: All data accessible and interactive
 - [x] **Global Accessibility**: Confirmed worldwide access via HTTPS
 - [x] **Professional Interface**: Research-grade visualization tools
@@ -161,7 +161,7 @@ Best regards,
 ## 🌍 **FINAL STATUS: DEPLOYMENT COMPLETE AND VERIFIED**
 
 **✅ Your Enhanced Public Health Research Platform is LIVE at:**  
-**🌐 https://sdemitre.github.io/Final-Build/**
+**🌐 https://sdemitre.github.io/Final-Build-Gemini/**
 
 **🦠 40 global disease outbreaks are now accessible worldwide**  
 **🗺️ Interactive mapping with professional visualization is operational**  
