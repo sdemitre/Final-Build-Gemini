@@ -1,14 +1,94 @@
-# Public Health Research Collaboration Platform
+# 🌍 Public Health Research Collaboration Platform
 
-A comprehensive web platform for public health researchers to collaborate, share unpublished papers for peer review, and access infectious disease data.
+## Enhanced Disease Surveillance Map with 40 Global Outbreaks
+
+A comprehensive web platform for public health researchers to collaborate, share research, and monitor global disease outbreaks in real-time.
+
+[![Deploy Status](https://api.netlify.com/api/v1/badges/YOUR-BADGE-ID/deploy-status)](https://app.netlify.com/sites/YOUR-SITE/deploys)
+[![GitHub Pages](https://github.com/sdemitre/Final-Build/workflows/Deploy%20Public%20Health%20Research%20Platform/badge.svg)](https://github.com/sdemitre/Final-Build/actions)
+
+## 🚀 Deployment & GitHub Integration
+
+### GitHub Repository
+**Source Code**: [https://github.com/sdemitre/Final-Build.git](https://github.com/sdemitre/Final-Build.git)
+
+### Automated Deployment with GitHub Actions
+The project includes GitHub Actions workflow for automated deployment:
+
+```yaml
+# .github/workflows/deploy.yml
+name: Deploy Public Health Research Platform
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: node build-static.mjs
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+```
+
+### Enhanced API Server Deployment
+
+- **🌐 GitHub Repository**: [View Source Code](https://github.com/sdemitre/Final-Build.git)
+- **🦠 Disease Map**: Interactive world map with 40 comprehensive disease outbreaks
+- **📊 API Explorer**: Live API endpoints for disease data
+- **📡 Live API**: `http://localhost:3000/api/diseases/outbreaks` (when running locally)
+
+## ✨ **Enhanced Features**
+
+### 🗺️ **Comprehensive Disease Outbreak Map**
+- **40 live disease outbreaks** across all continents
+- **Interactive filtering** by disease type, region, status, and timeframe
+- **Real-time visualization** with color-coded status indicators (Active/Monitoring/Contained)
+- **Detailed outbreak information** with case numbers, coordinates, and data sources
+
+### 📊 **Disease Outbreak Coverage**
+
+| Region | Outbreaks | Active | Monitoring | Contained |
+|--------|-----------|--------|------------|-----------|
+| 🌍 Africa | 11 | 7 | 3 | 1 |
+| 🌏 Asia | 15 | 10 | 4 | 1 |
+| 🌎 Americas | 8 | 6 | 2 | 0 |
+| 🌍 Europe | 6 | 3 | 3 | 0 |
+| **Total** | **40** | **26** | **12** | **2** |
+
+### 🦠 **Disease Categories Covered**
+- **Viral Diseases**: COVID-19, Ebola, Dengue, Zika, Yellow Fever, Measles, etc.
+- **Bacterial Infections**: Cholera, Typhoid, Plague, Meningitis, Tuberculosis, etc.
+- **Parasitic Diseases**: Malaria, Leishmaniasis, Schistosomiasis, Chagas Disease
+- **Vector-borne**: Dengue, West Nile, Chikungunya, Rift Valley Fever
+- **Zoonotic**: Rabies, Lassa Fever, Nipah, Marburg, MERS-CoV
+- **Fungal**: Histoplasmosis, Coccidioidomycosis
+
+### 📡 **Live API Endpoints**
+- `/api/diseases/outbreaks` - Complete 40 disease outbreaks dataset
+- `/api/health` - Server health monitoring
+- `/api/papers` - Research papers database
+- `/api/users` - Researcher profiles
+- `/api/jobs` - Career opportunities
+- `/api/collaborations` - Research partnerships
 
 ## 🎯 Project Overview
 
 This platform enables public health researchers, analysts, and research scientists to:
 
+- **Monitor 40 global disease outbreaks** through an enhanced interactive world map
+- **Access real-time outbreak data** with geographic coordinates and case statistics
 - **Submit unpublished papers** for informal peer review and feedback
 - **Collaborate** with other researchers for joint publications
-- **Access disease outbreak data** through an interactive world map
+- **Filter and analyze disease data** by type, region, status, and timeline
 - **Find job opportunities** in public health research
 - **Share and search research data** from verified sources
 - **Connect with researchers** from recognized institutions worldwide
@@ -148,6 +228,21 @@ npm run docker:prod
    - Backend API: http://localhost:5000
    - Health Check: http://localhost:5000/health
 
+### Option 3: Enhanced API Server (For Disease Map Testing)
+
+To test the enhanced disease outbreak map with 40 live outbreaks:
+
+```bash
+# Start the enhanced API server with 40 disease outbreaks
+node api-server.mjs
+
+# The server will run on http://localhost:3000
+# Access endpoints:
+# - http://localhost:3000/api/diseases/outbreaks (40 outbreaks)
+# - http://localhost:3000/api/health (server status)
+# - http://localhost:3000/api-test.html (API explorer)
+```
+
 ## 🗂️ Project Structure
 
 ```
@@ -220,11 +315,18 @@ npm test                      # Run client tests
 - Collaboration requests and agreements
 - Version control for paper revisions
 
-### 2. Interactive Disease Map
-- Real-time disease outbreak data
-- Geographic visualization with Leaflet
-- Filter by disease type, region, and time period
-- Hover interactions for detailed information
+### 2. Enhanced Interactive Disease Map
+- **40 comprehensive disease outbreaks** across all continents
+- **Real-time disease outbreak data** with live API integration
+- **Geographic visualization** with Leaflet.js mapping
+- **Advanced filtering** by disease type, region, status, and time period
+- **Interactive popups** with detailed outbreak information including:
+  - Case counts and death tolls
+  - Geographic coordinates
+  - Outbreak timeline and status
+  - Data source links
+- **Color-coded status indicators** (Active/Monitoring/Contained)
+- **Global coverage** including Africa, Asia, Americas, Europe, and Oceania
 
 ### 3. Researcher Network
 - Verified researcher profiles
@@ -356,8 +458,34 @@ npm start
 - `GET /api/users/search` - Search researchers
 
 ### Disease Endpoints
-- `GET /api/diseases/outbreaks` - Get outbreak data
+- `GET /api/diseases/outbreaks` - Get 40 comprehensive disease outbreaks
 - `GET /api/diseases/statistics` - Get disease statistics
+- `GET /api/health` - Server health and status check
+
+#### Enhanced Outbreak Data Response:
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "disease_name": "COVID-19",
+      "region": "Asia",
+      "country": "China",
+      "coordinates": { "lat": 30.5928, "lng": 114.3055 },
+      "cases_reported": 100000,
+      "deaths_reported": 3000,
+      "status": "contained",
+      "description": "Initial COVID-19 outbreak in Wuhan",
+      "outbreak_start": "2019-12-01",
+      "source_url": "https://who.int"
+    }
+    // ... 39 more outbreaks
+  ],
+  "count": 40,
+  "timestamp": "2024-10-22T12:00:00Z"
+}
+```
 
 ### Job Endpoints
 - `GET /api/jobs` - List job opportunities
@@ -387,5 +515,6 @@ For support and questions:
 
 ---
 
-**Built with ❤️ for the global public health research community**#   F i n a l - B u i l d  
+**Built with ❤️ for the global public health research community**#   F i n a l - B u i l d 
+ 
  

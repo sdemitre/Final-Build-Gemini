@@ -3,12 +3,16 @@ import { MapContainer, TileLayer, Marker, Popup, CircleMarker } from 'react-leaf
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Fix for default markers
+// Fix for default markers - use import instead of require
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
 });
 
 interface DiseaseOutbreak {
@@ -47,83 +51,38 @@ const DiseaseMap: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [selectedOutbreak, setSelectedOutbreak] = useState<DiseaseOutbreak | null>(null);
 
-  // Mock data - in real app, this would come from WHO API or similar
+  // Fetch outbreak data from API
   useEffect(() => {
     const fetchOutbreakData = async () => {
-      // Simulate API call
-      setTimeout(() => {
-        const mockOutbreaks: DiseaseOutbreak[] = [
-          {
-            id: '1',
-            diseaseName: 'COVID-19',
-            region: 'Asia',
-            country: 'China',
-            coordinates: { lat: 30.5928, lng: 114.3055 },
-            outbreakStart: '2019-12-01',
-            casesReported: 100000,
-            deathsReported: 3000,
-            status: 'contained',
-            description: 'Initial COVID-19 outbreak in Wuhan',
-            sourceUrl: 'https://who.int',
-          },
-          {
-            id: '2',
-            diseaseName: 'Ebola',
-            region: 'Africa',
-            country: 'Democratic Republic of Congo',
-            coordinates: { lat: -4.0383, lng: 21.7587 },
-            outbreakStart: '2020-06-01',
-            casesReported: 5000,
-            deathsReported: 500,
-            status: 'contained',
-            description: 'Ebola outbreak in eastern DRC',
-            sourceUrl: 'https://who.int',
-          },
-          {
-            id: '3',
-            diseaseName: 'Dengue Fever',
-            region: 'South America',
-            country: 'Brazil',
-            coordinates: { lat: -14.2350, lng: -51.9253 },
-            outbreakStart: '2024-01-15',
-            casesReported: 25000,
-            deathsReported: 150,
-            status: 'active',
-            description: 'Dengue outbreak during rainy season',
-            sourceUrl: 'https://paho.org',
-          },
-          {
-            id: '4',
-            diseaseName: 'Mpox',
-            region: 'Africa',
-            country: 'Nigeria',
-            coordinates: { lat: 9.0820, lng: 8.6753 },
-            outbreakStart: '2023-08-20',
-            casesReported: 1200,
-            deathsReported: 45,
-            status: 'active',
-            description: 'Ongoing mpox cases in multiple states',
-            sourceUrl: 'https://who.int',
-          },
-          {
-            id: '5',
-            diseaseName: 'Cholera',
-            region: 'Asia',
-            country: 'Bangladesh',
-            coordinates: { lat: 23.6850, lng: 90.3563 },
-            outbreakStart: '2024-03-10',
-            casesReported: 3500,
-            deathsReported: 89,
-            status: 'active',
-            description: 'Cholera outbreak in refugee camps',
-            sourceUrl: 'https://who.int',
-          },
-        ];
+      try {
+        const response = await fetch('/api/diseases/outbreaks');
+        const data = await response.json();
+        
+        // Transform API data to match frontend interface
+        const transformedOutbreaks = data.data.map((outbreak: any) => ({
+          id: outbreak.id.toString(),
+          diseaseName: outbreak.disease_name,
+          region: outbreak.region,
+          country: outbreak.country,
+          coordinates: outbreak.coordinates,
+          outbreakStart: outbreak.outbreak_start,
+          casesReported: outbreak.cases_reported,
+          deathsReported: outbreak.deaths_reported,
+          status: outbreak.status as 'active' | 'contained' | 'resolved',
+          description: outbreak.description,
+          sourceUrl: outbreak.source_url,
+        }));
 
-        setOutbreaks(mockOutbreaks);
-        setFilteredOutbreaks(mockOutbreaks);
+        setOutbreaks(transformedOutbreaks);
+        setFilteredOutbreaks(transformedOutbreaks);
         setLoading(false);
-      }, 1000);
+      } catch (error) {
+        console.error('Error fetching outbreak data:', error);
+        // Fallback to empty array or show error message
+        setOutbreaks([]);
+        setFilteredOutbreaks([]);
+        setLoading(false);
+      }
     };
 
     fetchOutbreakData();

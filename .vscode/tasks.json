@@ -60,6 +60,21 @@
 			"command": "docker-setup.bat",
 			"problemMatcher": [],
 			"group": "build"
+		},
+		{
+			"label": "Build React App",
+			"type": "shell",
+			"command": "cd client && npm run build",
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Start API Server",
+			"type": "shell",
+			"command": "node api-server.mjs",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
 		}
 	]
 }
