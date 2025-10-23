@@ -1,6 +1,6 @@
 [build]
   # Build command - we'll use the enhanced api-server.mjs for static generation
-  command = "node build-static.js"
+  command = "node build-static.mjs"
   # Directory to publish
   publish = "dist"
 
