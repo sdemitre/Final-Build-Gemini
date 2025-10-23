@@ -23,7 +23,7 @@ git commit -m "Initial commit: Enhanced disease map with 40 outbreaks"
 
 #### 2. **Connect to GitHub Repository**
 ```bash
-# Add your GitHub repository as remote
+# Add your GitHub repository as remote (Final-Build-Gemini)
 git remote add origin https://github.com/sdemitre/Final-Build.git
 
 # Push to GitHub
@@ -53,7 +53,7 @@ Final-Build/
 1. **Connect Repository to Netlify**
    - Go to [netlify.com](https://netlify.com)
    - Click "New site from Git"
-   - Select your GitHub repository: `sdemitre/Final-Build`
+  - Select your GitHub repository: `sdemitre/Final-Build` (Final-Build-Gemini)
    - Configure build settings:
      - **Build Command**: `node build-static.mjs`
      - **Publish Directory**: `dist`
