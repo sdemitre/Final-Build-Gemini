@@ -88,6 +88,13 @@
 			"command": "npm run dev",
 			"isBackground": true,
 			"group": "build"
+		},
+		{
+			"label": "Enhanced API Server",
+			"type": "shell",
+			"command": "node api-server.mjs",
+			"isBackground": true,
+			"group": "build"
 		}
 	]
 }
