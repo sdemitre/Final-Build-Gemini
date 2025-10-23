@@ -135,7 +135,7 @@ GET /api/jobs
 
 ## 📞 **Support & Access**
 
-- **GitHub Repository**: [sdemitre/Final-Build](https://github.com/sdemitre/Final-Build.git)
+- **GitHub Repository**: [sdemitre/Final-Build-Gemini](https://github.com/sdemitre/Final-Build-Gemini.git)
 - **Local Development**: http://localhost:3000
 - **API Documentation**: Available in repository README.md
 - **Issue Tracking**: GitHub Issues for bug reports and feature requests
