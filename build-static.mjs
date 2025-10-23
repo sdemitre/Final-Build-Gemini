@@ -1,0 +1,582 @@
+// Build script for Netlify deployment
+// This generates static HTML files and sets up the project structure
+
+import { writeFile, mkdir, copyFile } from 'fs/promises';
+import { existsSync } from 'fs';
+import { join } from 'path';
+
+// Enhanced HTML with world map for static deployment
+const staticHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Health Research Platform</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #334155;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e40af 0%, #0d9488 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: #64748b;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #1e40af 0%, #0d9488 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin: 0.5rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.3);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #10b981;
+            color: white;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-left: 1rem;
+        }
+        
+        /* World Map Styles */
+        .map-section {
+            padding: 4rem 0;
+            background: #f1f5f9;
+        }
+        
+        .map-container {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+        
+        #world-map {
+            height: 500px;
+            width: 100%;
+            border-radius: 0.5rem;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .map-legend {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .outbreak-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #64748b;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+        }
+        
+        .api-section {
+            padding: 4rem 0;
+            background: white;
+        }
+        
+        .api-demo {
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .api-response {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+        
+        .footer {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .nav-links { flex-direction: column; gap: 1rem; }
+            .container { padding: 0 1rem; }
+            #world-map { height: 400px; }
+            .map-legend { gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">🔬 PH Research Hub</div>
+                <ul class="nav-links">
+                    <li><a href="#papers">Papers</a></li>
+                    <li><a href="#map">Disease Map</a></li>
+                    <li><a href="#researchers">Researchers</a></li>
+                    <li><a href="#api">API Demo</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Public Health Research Platform</h1>
+                <p>Connecting researchers worldwide for collaborative infectious disease research and knowledge sharing</p>
+                <a href="#map" class="btn">🗺️ Explore Disease Map</a>
+                <a href="#api" class="btn">📊 View APIs</a>
+                <div class="status-badge">✅ Deployed on Netlify</div>
+            </div>
+        </section>
+
+        <section id="map" class="map-section">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2.5rem; color: #1e293b;">Global Disease Outbreak Map</h2>
+                <p style="text-align: center; color: #64748b; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Real-time visualization of infectious disease outbreaks worldwide. Click on markers to view detailed outbreak information.
+                </p>
+                
+                <div class="map-container">
+                    <div id="world-map"></div>
+                    <div class="map-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #dc2626;"></div>
+                            <span>Active Outbreak</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #f59e0b;"></div>
+                            <span>Monitoring</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #10b981;"></div>
+                            <span>Contained</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="outbreak-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-outbreaks">3</div>
+                        <div class="stat-label">Active Outbreaks</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-cases">26,050</div>
+                        <div class="stat-label">Total Cases</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="countries-affected">3</div>
+                        <div class="stat-label">Countries Affected</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="last-updated">Oct 2024</div>
+                        <div class="stat-label">Last Updated</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="api" class="api-section">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2.5rem; color: #1e293b;">Live API Endpoints</h2>
+                
+                <div class="api-demo">
+                    <h3>📊 API Health Check</h3>
+                    <p>Server status and available endpoints:</p>
+                    <div class="api-response" id="health-response">Loading health status...</div>
+                </div>
+
+                <div class="api-demo">
+                    <h3>📄 Research Papers API</h3>
+                    <p>Access the latest research papers and submissions:</p>
+                    <div class="api-response" id="papers-response">Loading papers...</div>
+                </div>
+
+                <div class="api-demo">
+                    <h3>🦠 Disease Outbreaks API</h3>
+                    <p>Real-time infectious disease outbreak data:</p>
+                    <div class="api-response" id="outbreaks-response">Loading outbreaks...</div>
+                </div>
+
+                <div class="api-demo">
+                    <h3>👥 Researchers API</h3>
+                    <p>Browse the global network of public health researchers:</p>
+                    <div class="api-response" id="users-response">Loading researchers...</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Public Health Research Platform. Advancing global health through research.</p>
+            <p style="margin-top: 0.5rem; opacity: 0.8;">🌍 Supporting evidence-based public health research worldwide</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mock outbreak data for the map
+        const outbreakData = [
+            {
+                disease_name: "Dengue Fever",
+                country: "Brazil",
+                region: "South America",
+                coordinates: { lat: -14.2350, lng: -51.9253 },
+                cases_reported: 25000,
+                deaths_reported: 150,
+                status: "active",
+                description: "Dengue outbreak during rainy season",
+                last_updated: "2024-10-20"
+            },
+            {
+                disease_name: "Mpox",
+                country: "Nigeria",
+                region: "Africa",
+                coordinates: { lat: 9.0820, lng: 8.6753 },
+                cases_reported: 1200,
+                deaths_reported: 45,
+                status: "active",
+                description: "Ongoing mpox cases in multiple states",
+                last_updated: "2024-10-18"
+            },
+            {
+                disease_name: "Cholera",
+                country: "Bangladesh",
+                region: "Asia",
+                coordinates: { lat: 23.6850, lng: 90.3563 },
+                cases_reported: 850,
+                deaths_reported: 12,
+                status: "contained",
+                description: "Cholera outbreak in flood-affected areas",
+                last_updated: "2024-10-15"
+            }
+        ];
+
+        // World Map Implementation
+        let map;
+
+        function initializeMap() {
+            // Create the map
+            map = L.map('world-map').setView([20, 0], 2);
+
+            // Add tile layer (OpenStreetMap)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 18,
+            }).addTo(map);
+
+            // Add markers for each outbreak
+            outbreakData.forEach(outbreak => {
+                const color = getOutbreakColor(outbreak.status);
+                const icon = L.divIcon({
+                    className: 'custom-outbreak-marker',
+                    html: \`<div style="background-color: \${color}; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>\`,
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 10]
+                });
+
+                const marker = L.marker([outbreak.coordinates.lat, outbreak.coordinates.lng], { icon })
+                    .addTo(map);
+
+                // Create popup content
+                const popupContent = \`
+                    <div style="font-family: sans-serif; min-width: 250px;">
+                        <h3 style="margin: 0 0 10px 0; color: #1e293b; font-size: 1.1em;">\${outbreak.disease_name}</h3>
+                        <p style="margin: 5px 0; color: #64748b;"><strong>Location:</strong> \${outbreak.country}, \${outbreak.region}</p>
+                        <p style="margin: 5px 0; color: #64748b;"><strong>Cases:</strong> \${outbreak.cases_reported.toLocaleString()}</p>
+                        <p style="margin: 5px 0; color: #64748b;"><strong>Deaths:</strong> \${outbreak.deaths_reported}</p>
+                        <p style="margin: 5px 0; color: #64748b;"><strong>Status:</strong> <span style="color: \${color}; font-weight: bold; text-transform: capitalize;">\${outbreak.status}</span></p>
+                        <p style="margin: 5px 0; color: #64748b;"><strong>Last Updated:</strong> \${outbreak.last_updated}</p>
+                        <p style="margin: 10px 0 0 0; color: #374151; font-style: italic;">\${outbreak.description}</p>
+                    </div>
+                \`;
+
+                marker.bindPopup(popupContent);
+            });
+        }
+
+        function getOutbreakColor(status) {
+            switch (status.toLowerCase()) {
+                case 'active': return '#dc2626';
+                case 'monitoring': return '#f59e0b';
+                case 'contained': return '#10b981';
+                default: return '#6b7280';
+            }
+        }
+
+        // Load API data
+        async function loadAPIData() {
+            try {
+                // For static deployment, use mock data
+                const mockResponses = {
+                    health: {
+                        status: 'OK',
+                        message: 'Public Health Research Platform API (Netlify Deployment)',
+                        timestamp: new Date().toISOString(),
+                        endpoints: {
+                            papers: '/api/papers',
+                            outbreaks: '/api/diseases/outbreaks',
+                            users: '/api/users',
+                            jobs: '/api/jobs',
+                            collaborations: '/api/collaborations'
+                        }
+                    },
+                    papers: {
+                        success: true,
+                        data: [
+                            {
+                                id: 1,
+                                title: "COVID-19 Transmission Patterns in Urban Areas",
+                                author: "Dr. Sarah Johnson",
+                                institution: "University Medical Center",
+                                status: "published"
+                            },
+                            {
+                                id: 2,
+                                title: "Malaria Prevention Strategies in Sub-Saharan Africa",
+                                author: "Dr. Michael Chen",
+                                institution: "Global Health Institute",
+                                status: "under-review"
+                            }
+                        ],
+                        count: 2,
+                        message: "Research papers retrieved successfully"
+                    },
+                    outbreaks: {
+                        success: true,
+                        data: outbreakData,
+                        count: 3,
+                        message: "Disease outbreak data retrieved successfully"
+                    },
+                    users: {
+                        success: true,
+                        data: [
+                            {
+                                id: 1,
+                                name: "Dr. Sarah Johnson",
+                                institution: "University Medical Center",
+                                specialization: "Epidemiology"
+                            },
+                            {
+                                id: 2,
+                                name: "Dr. Michael Chen",
+                                institution: "Global Health Institute",
+                                specialization: "Infectious Diseases"
+                            }
+                        ],
+                        count: 2,
+                        message: "Users retrieved successfully"
+                    }
+                };
+
+                document.getElementById('health-response').textContent = JSON.stringify(mockResponses.health, null, 2);
+                document.getElementById('papers-response').textContent = JSON.stringify(mockResponses.papers, null, 2);
+                document.getElementById('outbreaks-response').textContent = JSON.stringify(mockResponses.outbreaks, null, 2);
+                document.getElementById('users-response').textContent = JSON.stringify(mockResponses.users, null, 2);
+
+            } catch (error) {
+                console.error('Error loading API data:', error);
+                const errorMsg = 'Static deployment - API endpoints available via serverless functions';
+                document.getElementById('health-response').textContent = errorMsg;
+                document.getElementById('papers-response').textContent = errorMsg;
+                document.getElementById('outbreaks-response').textContent = errorMsg;
+                document.getElementById('users-response').textContent = errorMsg;
+            }
+        }
+
+        // Initialize everything when page loads
+        window.addEventListener('load', () => {
+            loadAPIData();
+            // Initialize map after a short delay to ensure the container is ready
+            setTimeout(initializeMap, 500);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>`;
+
+async function buildForNetlify() {
+    console.log('🏗️  Building Public Health Research Platform for Netlify deployment...');
+    
+    try {
+        // Create dist directory if it doesn't exist
+        if (!existsSync('dist')) {
+            await mkdir('dist', { recursive: true });
+        }
+
+        // Create .netlify/functions directory for serverless functions
+        if (!existsSync('.netlify/functions')) {
+            await mkdir('.netlify/functions', { recursive: true });
+        }
+
+        // Write the main HTML file
+        await writeFile('dist/index.html', staticHTML);
+        console.log('✅ Created dist/index.html');
+
+        // Create a simple _redirects file for Netlify
+        const redirects = `# Netlify redirects
+/api/* /.netlify/functions/:splat 200
+/* /index.html 200
+`;
+        await writeFile('dist/_redirects', redirects);
+        console.log('✅ Created dist/_redirects');
+
+        console.log('');
+        console.log('🎉 Build completed successfully!');
+        console.log('📁 Files ready for Netlify deployment in ./dist directory');
+        console.log('');
+        console.log('Next steps:');
+        console.log('1. Upload dist/ folder to Netlify or connect GitHub repository');
+        console.log('2. Set build command: node build-static.js');
+        console.log('3. Set publish directory: dist');
+        console.log('');
+
+    } catch (error) {
+        console.error('❌ Build failed:', error);
+        process.exit(1);
+    }
+}
+
+buildForNetlify();

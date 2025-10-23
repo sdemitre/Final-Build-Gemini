@@ -1,0 +1,35 @@
+{
+  "name": "public-health-research-platform",
+  "version": "1.0.0",
+  "description": "Collaborative platform for public health researchers to share papers, track disease outbreaks, and connect globally",
+  "main": "api-server.mjs",
+  "type": "module",
+  "scripts": {
+    "build": "node build-static.js",
+    "dev": "node api-server.mjs",
+    "start": "node platform-server.mjs",
+    "netlify-dev": "netlify dev",
+    "deploy": "netlify deploy --prod --dir=dist"
+  },
+  "keywords": [
+    "public-health",
+    "research",
+    "collaboration",
+    "disease-tracking",
+    "epidemiology",
+    "infectious-diseases"
+  ],
+  "author": "Public Health Research Team",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sdemitre/Final-Build.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
