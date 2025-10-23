@@ -288,7 +288,6 @@ router.post('/submit', auth, upload.fields([
       conflictsOfInterest,
       acknowledgments
     } = req.body;
-  const { collaborationAgreementText, collaborationAgreementAccepted } = req.body;
 
     // Parse JSON strings
     const parsedKeywords = typeof keywords === 'string' ? JSON.parse(keywords) : keywords || [];
@@ -298,12 +297,6 @@ router.post('/submit', auth, upload.fields([
     const parsedInterventions = typeof interventions === 'string' ? JSON.parse(interventions) : interventions || [];
     const parsedOutcomes = typeof outcomes === 'string' ? JSON.parse(outcomes) : outcomes || [];
     const parsedCollaborationNeeds = typeof collaborationNeeds === 'string' ? JSON.parse(collaborationNeeds) : collaborationNeeds || [];
-
-    // Require acceptance of collaboration agreement when seeking collaboration
-    const collabAgreementAcceptedFlag = (collaborationAgreementAccepted === 'true' || collaborationAgreementAccepted === true);
-    if (isSeekingCollaboration === 'true' && !collabAgreementAcceptedFlag) {
-      return res.status(400).json({ message: 'Collaboration agreement must be accepted when seeking collaboration' });
-    }
 
     // Handle file uploads
     const files = req.files;
@@ -329,11 +322,11 @@ router.post('/submit', auth, upload.fields([
           specific_conditions, interventions, outcomes, author_id,
           is_seeking_collaboration, collaboration_needs, data_available_for_sharing,
           preferred_partner_criteria, previous_publications, conflicts_of_interest,
-          acknowledgments, collaboration_agreement_text, collaboration_agreement_accepted, manuscript_file_url, status, submission_date
+          acknowledgments, manuscript_file_url, status, submission_date
         )
         VALUES (
           $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16,
-          $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33
+          $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31
         )
         RETURNING *
       `, [
@@ -346,56 +339,10 @@ router.post('/submit', auth, upload.fields([
         isSeekingCollaboration === 'true', parsedCollaborationNeeds,
         dataAvailableForSharing === 'true', preferredPartnerCriteria || null,
         previousPublications || null, conflictsOfInterest || null,
-        acknowledgments || null, collaborationAgreementText || null, (collaborationAgreementAccepted === 'true' || collaborationAgreementAccepted === true), manuscriptFile.path, 'submitted', new Date()
+        acknowledgments || null, manuscriptFile.path, 'submitted', new Date()
       ]);
 
       const paperId = newPaper.rows[0].id;
-
-      // If an editable collaboration agreement was provided, store it in collaboration_agreements table
-      try {
-        if (collaborationAgreementText && collaborationAgreementText.trim()) {
-          // attempt to fetch signer info from users table
-          let signerName = null;
-          let signerTitle = null;
-          let signerInstitution = null;
-          try {
-            const userRes = await db.query('SELECT first_name, last_name, title, institution FROM users WHERE id = $1', [req.user.userId]);
-            if (userRes.rows[0]) {
-              signerName = `${userRes.rows[0].first_name} ${userRes.rows[0].last_name}`.trim();
-              signerTitle = userRes.rows[0].title || null;
-              signerInstitution = userRes.rows[0].institution || null;
-            }
-          } catch (uErr) {
-            console.warn('Could not fetch signer user info', uErr);
-          }
-
-          await db.query(`
-            INSERT INTO collaboration_agreements (
-              paper_id, template_type, agreement_content, agreement_text,
-              signer_user_id, signer_name, signer_title, signer_institution,
-              signed_by_initiator, signed_at, is_active, created_at
-            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,NOW(),TRUE,NOW())
-          `, [
-            paperId,
-            'paper_submission',
-            JSON.stringify({ text: collaborationAgreementText }),
-            collaborationAgreementText,
-            req.user.userId,
-            signerName,
-            signerTitle,
-            signerInstitution,
-            true
-          ]);
-
-          // Mark acceptance flag/timestamp on papers for convenience/search
-          if (collaborationAgreementAccepted === 'true' || collaborationAgreementAccepted === true) {
-            await db.query(`UPDATE papers SET collaboration_agreement_accepted = true, collaboration_agreement_accepted_at = NOW() WHERE id = $1`, [paperId]);
-          }
-        }
-      } catch (agreementErr) {
-        console.error('Error storing collaboration agreement:', agreementErr);
-        // don't fail the whole submission for agreement storage issues; continue
-      }
 
       // Add paper tags for better categorization
       const tags = [
@@ -512,25 +459,6 @@ router.get('/:id', async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching paper:', error);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
-
-// Get collaboration agreements for a paper
-router.get('/:id/agreements', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const agreements = await db.query(`
-      SELECT ca.*, u.first_name, u.last_name
-      FROM collaboration_agreements ca
-      LEFT JOIN users u ON ca.signer_user_id = u.id
-      WHERE ca.paper_id = $1
-      ORDER BY ca.created_at DESC
-    `, [id]);
-
-    res.json({ agreements: agreements.rows });
-  } catch (error) {
-    console.error('Error fetching collaboration agreements:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });

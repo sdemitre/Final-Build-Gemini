@@ -1,1 +1,0 @@
-run file:///C:/Users/stoure/OneDrive%20-%20The%20Fedcap%20Group%20Inc/Documents/GitHub/Outbreak-Project/Builds/Final-Build/dist/index.html

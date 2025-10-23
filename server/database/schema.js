@@ -44,18 +44,10 @@ const createTables = async () => {
         co_authors INTEGER[],
         is_seeking_collaboration BOOLEAN DEFAULT FALSE,
         collaboration_needs TEXT,
-        collaboration_agreement_text TEXT,
-        collaboration_agreement_accepted BOOLEAN DEFAULT FALSE,
-        collaboration_agreement_accepted_at TIMESTAMP,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-
-    // Ensure collaboration agreement columns exist (for upgrades)
-    await db.query(`ALTER TABLE papers ADD COLUMN IF NOT EXISTS collaboration_agreement_text TEXT`);
-    await db.query(`ALTER TABLE papers ADD COLUMN IF NOT EXISTS collaboration_agreement_accepted BOOLEAN DEFAULT FALSE`);
-    await db.query(`ALTER TABLE papers ADD COLUMN IF NOT EXISTS collaboration_agreement_accepted_at TIMESTAMP`);
 
     // Reviews table
     await db.query(`
@@ -150,17 +142,11 @@ const createTables = async () => {
       CREATE TABLE IF NOT EXISTS collaboration_agreements (
         id SERIAL PRIMARY KEY,
         collaboration_id INTEGER REFERENCES collaborations(id),
-        paper_id INTEGER REFERENCES papers(id),
         template_type VARCHAR(100),
         agreement_content JSONB,
-        agreement_text TEXT,
         legal_terms TEXT,
         data_sharing_clauses TEXT,
         intellectual_property_terms TEXT,
-        signer_user_id INTEGER REFERENCES users(id),
-        signer_name VARCHAR(255),
-        signer_title VARCHAR(255),
-        signer_institution VARCHAR(255),
         signed_by_initiator BOOLEAN DEFAULT FALSE,
         signed_by_collaborator BOOLEAN DEFAULT FALSE,
         signed_at TIMESTAMP,
@@ -168,14 +154,6 @@ const createTables = async () => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-
-    // Ensure collaboration_agreements has paper-related columns for upgrades
-    await db.query(`ALTER TABLE collaboration_agreements ADD COLUMN IF NOT EXISTS paper_id INTEGER REFERENCES papers(id)`);
-    await db.query(`ALTER TABLE collaboration_agreements ADD COLUMN IF NOT EXISTS agreement_text TEXT`);
-    await db.query(`ALTER TABLE collaboration_agreements ADD COLUMN IF NOT EXISTS signer_user_id INTEGER REFERENCES users(id)`);
-    await db.query(`ALTER TABLE collaboration_agreements ADD COLUMN IF NOT EXISTS signer_name VARCHAR(255)`);
-    await db.query(`ALTER TABLE collaboration_agreements ADD COLUMN IF NOT EXISTS signer_title VARCHAR(255)`);
-    await db.query(`ALTER TABLE collaboration_agreements ADD COLUMN IF NOT EXISTS signer_institution VARCHAR(255)`);
 
     // Verification and audit logs
     await db.query(`
