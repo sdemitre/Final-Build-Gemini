@@ -1,0 +1,69 @@
+# GitHub Pages Configuration for Enhanced Disease Surveillance Platform
+
+# Site settings
+title: "Enhanced Disease Surveillance Platform"
+description: "Real-time monitoring of 40 global disease outbreaks with interactive mapping"
+url: "https://sdemitre.github.io"
+baseurl: "/Final-Build"
+
+# GitHub Pages settings
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Include files
+include:
+  - _redirects
+  - dist/
+
+# Exclude files from processing
+exclude:
+  - node_modules/
+  - .git/
+  - .github/
+  - package*.json
+  - README.md
+  - client/
+  - server/
+  - automation_run.ps1
+  - full_run.ps1
+  - "*.mjs"
+  - "*.ps1"
+  - "*.bat"
+
+# Enhanced Disease Surveillance Platform Configuration
+collections:
+  outbreaks:
+    output: true
+    permalink: /:collection/:name/
+
+# Custom variables
+outbreak_count: 40
+regions:
+  - name: "Africa"
+    count: 11
+  - name: "Asia" 
+    count: 15
+  - name: "Americas"
+    count: 8
+  - name: "Europe"
+    count: 6
+
+# API endpoints
+api_endpoints:
+  - "/api/diseases/outbreaks"
+  - "/api/health"
+  - "/api/papers"
+  - "/api/users"
+  - "/api/jobs"
+
+# Live deployment info
+deployment:
+  status: "live"
+  platform: "GitHub Pages"
+  url: "https://sdemitre.github.io/Final-Build/"
+  last_updated: "2025-10-23"
