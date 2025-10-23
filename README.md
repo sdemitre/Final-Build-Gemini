@@ -5,12 +5,12 @@
 A comprehensive web platform for public health researchers to collaborate, share research, and monitor global disease outbreaks in real-time.
 
 [![Deploy Status](https://api.netlify.com/api/v1/badges/YOUR-BADGE-ID/deploy-status)](https://app.netlify.com/sites/YOUR-SITE/deploys)
-[![GitHub Pages](https://github.com/sdemitre/Final-Build/workflows/Deploy%20Public%20Health%20Research%20Platform/badge.svg)](https://github.com/sdemitre/Final-Build/actions) (Final-Build-Gemini)
+[![GitHub Pages](https://github.com/sdemitre/Final-Build-Gemini/workflows/Deploy%20Public%20Health%20Research%20Platform/badge.svg)](https://github.com/sdemitre/Final-Build-Gemini/actions)
 
 ## 🚀 Deployment & GitHub Integration
 
 ### GitHub Repository
-**Source Code**: [https://github.com/sdemitre/Final-Build.git](https://github.com/sdemitre/Final-Build.git) (Final-Build-Gemini)
+**Source Code**: [https://github.com/sdemitre/Final-Build-Gemini.git](https://github.com/sdemitre/Final-Build-Gemini.git)
 
 ### Automated Deployment with GitHub Actions
 The project includes GitHub Actions workflow for automated deployment:
@@ -41,7 +41,7 @@ jobs:
 
 ### Enhanced API Server Deployment
 
-- **🌐 GitHub Repository**: [View Source Code](https://github.com/sdemitre/Final-Build.git) (Final-Build-Gemini)
+- **🌐 GitHub Repository**: [View Source Code](https://github.com/sdemitre/Final-Build-Gemini.git)
 - **🦠 Disease Map**: Interactive world map with 40 comprehensive disease outbreaks
 - **📊 API Explorer**: Live API endpoints for disease data
 - **📡 Live API**: `http://localhost:3000/api/diseases/outbreaks` (when running locally)

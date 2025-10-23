@@ -17,7 +17,7 @@ All necessary files have been created and committed to your repository:
 ### Step 1: Connect to Netlify
 1. Go to [netlify.com](https://netlify.com) and sign up/login
 2. Click "New site from Git"
-3. Choose GitHub and select your repository: `sdemitre/Final-Build`
+3. Choose GitHub and select your repository: `sdemitre/Final-Build-Gemini`
 
 ### Step 2: Configure Build Settings
 - **Build command:** `node build-static.mjs`
@@ -81,7 +81,7 @@ Your deployed platform will feature:
 
 ## 🔗 Repository Status
 
-✅ All files committed to: https://github.com/sdemitre/Final-Build.git
+✅ All files committed to: https://github.com/sdemitre/Final-Build-Gemini.git
 ✅ Ready for automatic deployment
 ✅ Serverless functions configured
 ✅ Build process optimized

@@ -1,9 +1,9 @@
-# ✅ DEPLOYMENT VERIFICATION: https://sdemitre.github.io/Final-Build/ (Final-Build-Gemini)
+# ✅ DEPLOYMENT VERIFICATION: https://sdemitre.github.io/Final-Build-Gemini/
 
 ## 🌐 **GITHUB PAGES DEPLOYMENT CONFIRMED LIVE**
 
-**Primary URL**: ✅ https://sdemitre.github.io/Final-Build/  (Final-Build-Gemini)
-**Alternative URL**: ✅ https://sdemitre.github.io/Final-Build/dist/  (Final-Build-Gemini)
+**Primary URL**: ✅ https://sdemitre.github.io/Final-Build-Gemini/
+**Alternative URL**: ✅ https://sdemitre.github.io/Final-Build-Gemini/dist/
 **Repository**: 📂 https://github.com/sdemitre/Final-Build  
 
 **Deployment Status**: 🟢 **FULLY OPERATIONAL**  

@@ -3,7 +3,7 @@
 ## ✅ **Live Deployment Status: ACTIVE**
 
 **Deployment Time**: October 22, 2025 - 10:50 PM UTC  
-**Repository**: [https://github.com/sdemitre/Final-Build.git](https://github.com/sdemitre/Final-Build.git) (Final-Build-Gemini)
+**Repository**: [https://github.com/sdemitre/Final-Build-Gemini.git](https://github.com/sdemitre/Final-Build-Gemini.git)
 
 ---
 

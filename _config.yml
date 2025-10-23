@@ -4,7 +4,7 @@
 title: "Enhanced Disease Surveillance Platform"
 description: "Real-time monitoring of 40 global disease outbreaks with interactive mapping"
 url: "https://sdemitre.github.io"
-baseurl: "/Final-Build"
+baseurl: "/Final-Build-Gemini"
 
 # GitHub Pages settings
 plugins:
@@ -65,5 +65,5 @@ api_endpoints:
 deployment:
   status: "live"
   platform: "GitHub Pages"
-  url: "https://sdemitre.github.io/Final-Build/"
+  url: "https://sdemitre.github.io/Final-Build-Gemini/"
   last_updated: "2025-10-23"

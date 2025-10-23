@@ -3,9 +3,9 @@
 ## ✅ **GITHUB PAGES DEPLOYMENT ACTIVE**
 
 **Live Website URLs**:
-- **Primary**: https://sdemitre.github.io/Final-Build/
-- **Alternative**: https://sdemitre.github.io/Final-Build/dist/
-- **Repository**: https://github.com/sdemitre/Final-Build
+- **Primary**: https://sdemitre.github.io/Final-Build-Gemini/
+- **Alternative**: https://sdemitre.github.io/Final-Build-Gemini/dist/
+- **Repository**: https://github.com/sdemitre/Final-Build-Gemini
 
 **Deployment Time**: October 23, 2025 - 4:00 PM UTC  
 **Status**: 🌐 LIVE AND ACCESSIBLE WORLDWIDE
@@ -89,7 +89,7 @@ https://github.com/sdemitre/Final-Build
 
 ### **🌐 Access the Live Website**
 1. **Open any web browser** (Chrome, Firefox, Safari, Edge)
-2. **Navigate to**: https://sdemitre.github.io/Final-Build/
+2. **Navigate to**: https://sdemitre.github.io/Final-Build-Gemini/
 3. **View the interactive disease map** with 40 global outbreaks
 
 ### **🗺️ Use the Enhanced Disease Map**
@@ -183,7 +183,7 @@ Your enhanced disease surveillance platform is now serving:
 ```
 🌍 Enhanced Disease Surveillance Platform - Now Live!
 🦠 40 Global Disease Outbreaks with Interactive Mapping
-🌐 https://sdemitre.github.io/Final-Build/
+🌐 https://sdemitre.github.io/Final-Build-Gemini/
 📊 Advanced filtering by region, status, and disease type
 ```
 
@@ -196,7 +196,7 @@ Dear Colleagues,
 I'm excited to share that our Enhanced Disease Surveillance Platform 
 is now live and accessible worldwide:
 
-🌐 Live Website: https://sdemitre.github.io/Final-Build/
+🌐 Live Website: https://sdemitre.github.io/Final-Build-Gemini/
 🦠 Features: 40 global disease outbreaks with interactive mapping
 🗺️ Advanced filtering and professional visualization
 
@@ -213,7 +213,7 @@ Best regards,
 
 **✅ Your Enhanced Public Health Research Platform is now LIVE on the internet!**
 
-**🌐 Accessible worldwide at: https://sdemitre.github.io/Final-Build/**
+**🌐 Accessible worldwide at: https://sdemitre.github.io/Final-Build-Gemini/**
 
 **🦠 40 global disease outbreaks available for exploration**  
 **🗺️ Interactive mapping with professional visualization**  

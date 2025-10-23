@@ -11,8 +11,8 @@
 - Professional scientific interface for research use
 
 ## 🌐 Expected Live URLs:
-- **GitHub Pages**: https://sdemitre.github.io/Final-Build/ (Final-Build-Gemini)
-- **Alternative**: https://sdemitre.github.io/Final-Build/dist/ (Final-Build-Gemini)
+- **GitHub Pages**: https://sdemitre.github.io/Final-Build-Gemini/
+- **Alternative**: https://sdemitre.github.io/Final-Build-Gemini/dist/
 
 ## 📊 Dataset:
 - Africa: 11 outbreaks (Ebola, Lassa Fever, Cholera, etc.)

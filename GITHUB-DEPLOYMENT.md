@@ -24,7 +24,7 @@ git commit -m "Initial commit: Enhanced disease map with 40 outbreaks"
 #### 2. **Connect to GitHub Repository**
 ```bash
 # Add your GitHub repository as remote (Final-Build-Gemini)
-git remote add origin https://github.com/sdemitre/Final-Build.git
+git remote add origin https://github.com/sdemitre/Final-Build-Gemini.git
 
 # Push to GitHub
 git branch -M main
@@ -33,7 +33,7 @@ git push -u origin main
 
 #### 3. **Repository Structure**
 ```
-Final-Build/
+Final-Build-Gemini/
 ├── client/                 # React frontend
 ├── server/                 # Node.js backend
 ├── api-server.mjs         # Production API server
