@@ -1,5 +1,5 @@
 {
-  "name": "ph-research-client",
+  "name": "final-build-gemini-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -15,7 +15,7 @@
     "classnames": "^2.3.2",
     "date-fns": "^2.30.0",
     "leaflet": "^1.9.4",
-    "public-health-research-platform": "file:..",
+  "final-build-gemini": "file:..",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.48.2",

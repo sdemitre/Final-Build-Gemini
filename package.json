@@ -1,5 +1,5 @@
 {
-  "name": "public-health-research-platform",
+  "name": "final-build-gemini",
   "version": "1.0.0",
   "description": "A comprehensive platform for public health researchers to collaborate and share research",
   "main": "server/index.js",
