@@ -10,6 +10,7 @@ const userRoutes = require('./routes/users');
 const jobRoutes = require('./routes/jobs');
 const diseaseRoutes = require('./routes/diseases');
 const collaborationRoutes = require('./routes/collaborations');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -39,11 +40,26 @@ app.use('/api/users', userRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/diseases', diseaseRoutes);
 app.use('/api/collaborations', collaborationRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is running' });
 });
+
+// Development-only endpoint to run DB schema creation/migrations
+if (process.env.NODE_ENV !== 'production') {
+  app.post('/admin/run-schema', async (req, res) => {
+    try {
+      const schema = require('./database/schema');
+      await schema.createTables();
+      return res.json({ message: 'Schema executed' });
+    } catch (error) {
+      console.error('Schema run error:', error);
+      return res.status(500).json({ message: 'Schema run failed', error: error.message });
+    }
+  });
+}
 
 // Error handling middleware
 app.use((err, req, res, next) => {

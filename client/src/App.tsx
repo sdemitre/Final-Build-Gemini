@@ -20,6 +20,7 @@ import Jobs from './pages/Jobs';
 import Researchers from './pages/Researchers';
 import Profile from './pages/Profile';
 import Collaborations from './pages/Collaborations';
+import AdminVetting from './pages/AdminVetting';
 
 // Import styles
 import './App.css';
@@ -83,6 +84,11 @@ export default function App() {
                 <Route path="/collaborations" element={
                   <PrivateRoute>
                     <Collaborations />
+                  </PrivateRoute>
+                } />
+                <Route path="/admin/vetting" element={
+                  <PrivateRoute>
+                    <AdminVetting />
                   </PrivateRoute>
                 } />
               </Routes>

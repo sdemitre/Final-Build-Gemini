@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
+import { api } from '../context/AuthContext';
 
 interface PaperSubmissionData {
   // Basic Information
@@ -44,6 +45,9 @@ interface PaperSubmissionData {
   collaborationNeeds: string[];
   dataAvailableForSharing: boolean;
   preferredPartnerCriteria: string;
+  // Collaboration agreement
+  collaborationAgreementAccepted: boolean;
+  collaborationAgreementText: string;
   
   // Files
   manuscriptFile: File | null;
@@ -91,6 +95,8 @@ const SubmitPaper: React.FC = () => {
     collaborationNeeds: [],
     dataAvailableForSharing: false,
     preferredPartnerCriteria: '',
+  collaborationAgreementAccepted: false,
+  collaborationAgreementText: `I, [Author Name], agree to collaborate and share de-identified data and analyses with named collaborators for the purpose of the project titled [Project Title]. Data sharing will comply with institutional and ethical guidelines and any necessary data use agreements will be executed prior to access. Specific terms (e.g., authorship, data access, publication timelines) will be documented and agreed upon by all collaborators.`,
     manuscriptFile: null,
     supplementaryFiles: [],
     ethicsDocuments: [],
@@ -188,16 +194,17 @@ const SubmitPaper: React.FC = () => {
         }
       });
 
-      // TODO: Replace with actual API call
-      // const response = await api.post('/papers/submit', submitData, {
-      //   headers: { 'Content-Type': 'multipart/form-data' }
-      // });
+      // Send to backend API (authenticated via axios instance in AuthContext)
+      const response = await api.post('/papers/submit', submitData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      toast.success('Paper submitted successfully!');
-      navigate('/papers');
+      if (response && (response.status === 200 || response.status === 201)) {
+        toast.success('Paper submitted successfully!');
+        navigate('/papers');
+      } else {
+        throw new Error('Unexpected response from server');
+      }
     } catch (error: any) {
       toast.error(error.message || 'Failed to submit paper');
     } finally {
@@ -650,6 +657,26 @@ const SubmitPaper: React.FC = () => {
                   placeholder="List relevant previous publications or state 'None'"
                 />
               </div>
+
+              <div className="form-group">
+                <label className="form-label">Collaboration Agreement (editable template)</label>
+                <textarea
+                  className="form-control"
+                  rows={6}
+                  value={formData.collaborationAgreementText}
+                  onChange={(e) => handleInputChange('collaborationAgreementText', e.target.value)}
+                />
+                <div className="form-text">Edit the template as needed. You must accept the agreement to submit.</div>
+                <div className="flex items-center gap-2 mt-2">
+                  <input
+                    type="checkbox"
+                    id="agreeCollab"
+                    checked={formData.collaborationAgreementAccepted}
+                    onChange={(e) => handleInputChange('collaborationAgreementAccepted', e.target.checked)}
+                  />
+                  <label htmlFor="agreeCollab" className="form-label mb-0">I agree to the collaboration terms above</label>
+                </div>
+              </div>
             </div>
           </div>
         );
@@ -806,7 +833,7 @@ const SubmitPaper: React.FC = () => {
                     <button
                       type="submit"
                       className="btn btn-success"
-                      disabled={isSubmitting || !formData.title || !formData.abstract || !formData.manuscriptFile}
+                      disabled={isSubmitting || !formData.title || !formData.abstract || !formData.manuscriptFile || (formData.isSeekingCollaboration && !formData.collaborationAgreementAccepted)}
                     >
                       {isSubmitting ? (
                         <>

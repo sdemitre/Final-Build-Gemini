@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, CircleMarker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, CircleMarker, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -50,6 +50,7 @@ const DiseaseMap: React.FC = () => {
   });
   const [loading, setLoading] = useState(true);
   const [selectedOutbreak, setSelectedOutbreak] = useState<DiseaseOutbreak | null>(null);
+  const [smallFont, setSmallFont] = useState(false);
 
   // Fetch outbreak data from API
   useEffect(() => {
@@ -57,9 +58,10 @@ const DiseaseMap: React.FC = () => {
       try {
         const response = await fetch('/api/diseases/outbreaks');
         const data = await response.json();
-        
+        // API returns { outbreaks: [...] }
         // Transform API data to match frontend interface
-        const transformedOutbreaks = data.data.map((outbreak: any) => ({
+        const source = data.outbreaks || data.data || [];
+        const transformedOutbreaks = source.map((outbreak: any) => ({
           id: outbreak.id.toString(),
           diseaseName: outbreak.disease_name,
           region: outbreak.region,
@@ -162,7 +164,7 @@ const DiseaseMap: React.FC = () => {
   }
 
   return (
-    <div className="container-fluid">
+    <div className={`container-fluid ${smallFont ? 'small-font' : ''}`}>
       <div className="disease-map-page">
         {/* Header */}
         <div className="map-header mb-4">
@@ -231,6 +233,14 @@ const DiseaseMap: React.FC = () => {
                   <option value="365">Last Year</option>
                 </select>
               </div>
+
+              <div className="form-group">
+                <label className="form-label">Display</label>
+                <div className="flex items-center gap-2">
+                  <input id="smallFont" type="checkbox" checked={smallFont} onChange={(e) => setSmallFont(e.target.checked)} />
+                  <label htmlFor="smallFont" className="mb-0">Compact text (reduce font size)</label>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -252,37 +262,45 @@ const DiseaseMap: React.FC = () => {
                       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     
-                    {filteredOutbreaks.map(outbreak => (
-                      <CircleMarker
-                        key={outbreak.id}
-                        center={[outbreak.coordinates.lat, outbreak.coordinates.lng]}
-                        radius={getMarkerSize(outbreak.casesReported)}
-                        fillColor={getStatusColor(outbreak.status)}
-                        color={getStatusColor(outbreak.status)}
-                        weight={2}
-                        opacity={0.8}
-                        fillOpacity={0.6}
-                        eventHandlers={{
-                          click: () => setSelectedOutbreak(outbreak),
-                        }}
-                      >
-                        <Popup>
-                          <div className="outbreak-popup">
-                            <h4>{outbreak.diseaseName}</h4>
-                            <p><strong>Location:</strong> {outbreak.country}, {outbreak.region}</p>
-                            <p><strong>Cases:</strong> {outbreak.casesReported.toLocaleString()}</p>
-                            <p><strong>Deaths:</strong> {outbreak.deathsReported.toLocaleString()}</p>
-                            <p><strong>Status:</strong> {outbreak.status}</p>
-                            <button 
-                              className="btn btn-sm btn-primary"
-                              onClick={() => setSelectedOutbreak(outbreak)}
-                            >
-                              View Details
-                            </button>
-                          </div>
-                        </Popup>
-                      </CircleMarker>
-                    ))}
+                      {filteredOutbreaks.map(outbreak => (
+                        <CircleMarker
+                          key={outbreak.id}
+                          center={[outbreak.coordinates.lat, outbreak.coordinates.lng]}
+                          radius={getMarkerSize(outbreak.casesReported)}
+                          fillColor={getStatusColor(outbreak.status)}
+                          color={getStatusColor(outbreak.status)}
+                          weight={2}
+                          opacity={0.8}
+                          fillOpacity={0.6}
+                          eventHandlers={{
+                            click: () => setSelectedOutbreak(outbreak),
+                            mouseover: () => setSelectedOutbreak(outbreak),
+                            mouseout: () => setSelectedOutbreak(prev => (prev && prev.id === outbreak.id ? null : prev)),
+                          }}
+                        >
+                          <Tooltip direction="top" offset={[0, -8]}>
+                            <div>
+                              <strong>{outbreak.diseaseName}</strong>
+                              <div className="text-sm">{outbreak.country} — {outbreak.casesReported.toLocaleString()} cases</div>
+                            </div>
+                          </Tooltip>
+                          <Popup>
+                            <div className="outbreak-popup">
+                              <h4>{outbreak.diseaseName}</h4>
+                              <p><strong>Location:</strong> {outbreak.country}, {outbreak.region}</p>
+                              <p><strong>Cases:</strong> {outbreak.casesReported.toLocaleString()}</p>
+                              <p><strong>Deaths:</strong> {outbreak.deathsReported.toLocaleString()}</p>
+                              <p><strong>Status:</strong> {outbreak.status}</p>
+                              <button 
+                                className="btn btn-sm btn-primary"
+                                onClick={() => setSelectedOutbreak(outbreak)}
+                              >
+                                View Details
+                              </button>
+                            </div>
+                          </Popup>
+                        </CircleMarker>
+                      ))}
                   </MapContainer>
                 </div>
               </div>

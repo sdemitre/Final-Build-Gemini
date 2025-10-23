@@ -9,175 +9,40 @@ import { fileURLToPath } from 'node:url';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const PORT = process.env.PORT || 3000;
 
-// Enhanced Mock Research Papers for Public Health Platform
+// Mock data for development
 const mockPapers = [
   {
     id: 1,
-    title: "COVID-19 Transmission Patterns in Urban Areas: A Comprehensive Analysis",
-    abstract: "This study examines the transmission patterns of COVID-19 in dense urban environments, analyzing data from 50 major cities worldwide. Our findings reveal significant correlations between population density, public transportation usage, and infection rates.",
+    title: "COVID-19 Transmission Patterns in Urban Areas",
+    abstract: "This study examines the transmission patterns of COVID-19 in dense urban environments...",
     author: "Dr. Sarah Johnson",
-    co_authors: ["Dr. Michael Chang", "Dr. Elena Rodriguez"],
-    institution: "Harvard School of Public Health",
+    institution: "University Medical Center",
     research_type: "observational",
     data_type: "quantitative",
     status: "published",
-    submission_date: "2024-03-15",
-    publication_date: "2024-06-20",
-    journal: "International Journal of Epidemiology",
-    doi: "10.1093/ije/dyab123",
-    keywords: ["COVID-19", "urban transmission", "epidemiology", "population density"],
-    categories: ["Infectious Disease", "Urban Health"],
-    citations: 45,
-    access_level: "open",
-    peer_review_status: "completed",
-    funding_source: "NIH Grant R01-AI12345"
+    submission_date: "2024-03-15"
   },
   {
     id: 2,
-    title: "Malaria Prevention Strategies in Sub-Saharan Africa: A Meta-Analysis of Intervention Effectiveness",
-    abstract: "An analysis of various malaria prevention strategies and their effectiveness across 30 Sub-Saharan African countries over the past decade. We evaluated bed nets, indoor spraying, and community education programs.",
+    title: "Malaria Prevention Strategies in Sub-Saharan Africa", 
+    abstract: "An analysis of various malaria prevention strategies and their effectiveness...",
     author: "Dr. Michael Chen",
-    co_authors: ["Dr. Amara Okafor", "Dr. Jean-Baptiste Nzeyimana"],
-    institution: "London School of Hygiene & Tropical Medicine",
+    institution: "Global Health Institute",
     research_type: "meta-analysis",
-    data_type: "mixed-methods",
+    data_type: "mixed-methods", 
     status: "under-review",
-    submission_date: "2024-04-02",
-    publication_date: null,
-    journal: "The Lancet Global Health",
-    doi: null,
-    keywords: ["malaria", "prevention", "Africa", "intervention", "meta-analysis"],
-    categories: ["Vector-borne Disease", "Global Health"],
-    citations: 0,
-    access_level: "restricted",
-    peer_review_status: "in-progress",
-    funding_source: "Gates Foundation Grant INV-12345"
+    submission_date: "2024-04-02"
   },
   {
     id: 3,
-    title: "Vaccine Hesitancy in Rural Communities: Socioeconomic and Cultural Determinants",
-    abstract: "Exploring factors contributing to vaccine hesitancy in rural populations across multiple countries. This qualitative study interviewed 2,500 individuals to understand barriers to vaccination uptake.",
+    title: "Vaccine Hesitancy in Rural Communities",
+    abstract: "Exploring factors contributing to vaccine hesitancy in rural populations...",
     author: "Dr. Emily Rodriguez",
-    co_authors: ["Dr. James Wilson", "Dr. Priya Patel"],
-    institution: "CDC National Center for Immunization",
+    institution: "Public Health Department",
     research_type: "survey",
     data_type: "qualitative",
     status: "published",
-    submission_date: "2024-05-10",
-    publication_date: "2024-08-15",
-    journal: "Vaccine",
-    doi: "10.1016/j.vaccine.2024.05.123",
-    keywords: ["vaccine hesitancy", "rural health", "immunization", "public health"],
-    categories: ["Immunization", "Rural Health"],
-    citations: 23,
-    access_level: "open",
-    peer_review_status: "completed",
-    funding_source: "CDC Cooperative Agreement NU50CK000123"
-  },
-  {
-    id: 4,
-    title: "Antimicrobial Resistance Patterns in Hospital-Acquired Infections: Global Surveillance Data",
-    abstract: "Analysis of antimicrobial resistance patterns from 200 hospitals across 50 countries, revealing alarming trends in carbapenem-resistant Enterobacteriaceae and methicillin-resistant Staphylococcus aureus.",
-    author: "Dr. Robert Kim",
-    co_authors: ["Dr. Lisa Thompson", "Dr. Ahmed Hassan"],
-    institution: "WHO Collaborating Centre for Surveillance",
-    research_type: "surveillance",
-    data_type: "quantitative",
-    status: "published",
-    submission_date: "2024-01-20",
-    publication_date: "2024-04-30",
-    journal: "Clinical Infectious Diseases",
-    doi: "10.1093/cid/ciae089",
-    keywords: ["antimicrobial resistance", "healthcare", "surveillance", "infection control"],
-    categories: ["Antimicrobial Resistance", "Healthcare-associated Infections"],
-    citations: 67,
-    access_level: "open",
-    peer_review_status: "completed",
-    funding_source: "WHO Research Grant WHO/2023/AMR/001"
-  },
-  {
-    id: 5,
-    title: "Climate Change and Vector-Borne Disease Expansion: Predictive Modeling for the Next Decade",
-    abstract: "Using machine learning algorithms to predict the expansion of vector-borne diseases due to climate change. Our models forecast significant range expansion for dengue, chikungunya, and Zika viruses.",
-    author: "Dr. Maria Santos",
-    co_authors: ["Dr. Thomas Anderson", "Dr. Raj Patel"],
-    institution: "Johns Hopkins Bloomberg School of Public Health",
-    research_type: "modeling",
-    data_type: "quantitative",
-    status: "in-preparation",
-    submission_date: "2024-09-15",
-    publication_date: null,
-    journal: "Nature Climate Change",
-    doi: null,
-    keywords: ["climate change", "vector-borne disease", "predictive modeling", "dengue"],
-    categories: ["Climate Health", "Vector-borne Disease"],
-    citations: 0,
-    access_level: "restricted",
-    peer_review_status: "draft",
-    funding_source: "NOAA Climate and Health Grant NA20OAR4310123"
-  },
-  {
-    id: 6,
-    title: "Mental Health Impact of COVID-19 Lockdowns: A Longitudinal Study",
-    abstract: "A 24-month longitudinal study examining the mental health consequences of COVID-19 lockdown measures across different demographic groups. Includes data from 10,000 participants in 15 countries.",
-    author: "Dr. Jennifer Walsh",
-    co_authors: ["Dr. Kevin O'Brien", "Dr. Yuki Tanaka"],
-    institution: "Oxford Centre for Global Health Research",
-    research_type: "longitudinal",
-    data_type: "mixed-methods",
-    status: "published",
-    submission_date: "2024-02-28",
-    publication_date: "2024-07-10",
-    journal: "The Lancet Psychiatry",
-    doi: "10.1016/S2215-0366(24)00123-X",
-    keywords: ["COVID-19", "mental health", "lockdown", "longitudinal study"],
-    categories: ["Mental Health", "Pandemic Response"],
-    citations: 89,
-    access_level: "open",
-    peer_review_status: "completed",
-    funding_source: "Wellcome Trust Grant 215123/Z/19/Z"
-  },
-  {
-    id: 7,
-    title: "Digital Health Interventions for Tuberculosis Management in Low-Resource Settings",
-    abstract: "Evaluation of mobile health applications and digital monitoring systems for tuberculosis treatment adherence in resource-limited settings. Study conducted across 25 clinics in India, Kenya, and Peru.",
-    author: "Dr. Pradeep Sharma",
-    co_authors: ["Dr. Grace Mwangi", "Dr. Carlos Mendoza"],
-    institution: "International Union Against Tuberculosis",
-    research_type: "intervention",
-    data_type: "quantitative",
-    status: "under-review",
-    submission_date: "2024-06-12",
-    publication_date: null,
-    journal: "Journal of Medical Internet Research",
-    doi: null,
-    keywords: ["tuberculosis", "digital health", "mHealth", "treatment adherence"],
-    categories: ["Digital Health", "Tuberculosis"],
-    citations: 0,
-    access_level: "open",
-    peer_review_status: "revision-requested",
-    funding_source: "USAID Global Health Grant AID-OAA-A-17-00123"
-  },
-  {
-    id: 8,
-    title: "Foodborne Illness Outbreak Investigation: Novel Genomic Surveillance Techniques",
-    abstract: "Application of whole-genome sequencing and phylogenetic analysis in rapid identification of foodborne pathogen sources. Case study of multi-state Salmonella outbreak in the United States.",
-    author: "Dr. Lisa Park",
-    co_authors: ["Dr. David Chen", "Dr. Anna Kowalski"],
-    institution: "FDA Center for Food Safety",
-    research_type: "case-study",
-    data_type: "genomic",
-    status: "published",
-    submission_date: "2024-03-08",
-    publication_date: "2024-06-05",
-    journal: "Emerging Infectious Diseases",
-    doi: "10.3201/eid3006.240123",
-    keywords: ["foodborne illness", "genomic surveillance", "Salmonella", "outbreak investigation"],
-    categories: ["Food Safety", "Genomic Epidemiology"],
-    citations: 34,
-    access_level: "open",
-    peer_review_status: "completed",
-    funding_source: "FDA Intramural Research Program"
+    submission_date: "2024-05-10"
   }
 ];
 
@@ -1212,161 +1077,15 @@ const server = createServer(async (req, res) => {
     if (url.startsWith('/api/')) {
       res.setHeader('Content-Type', 'application/json');
       
-      if (url.startsWith('/api/papers') && method === 'GET') {
+      if (url === '/api/papers' && method === 'GET') {
         console.log('Serving papers API');
-        
-        // Parse query parameters
-        const urlObj = new URL(url, `http://localhost:${PORT}`);
-        const params = urlObj.searchParams;
-        
-        // Extract filter parameters
-        const status = params.get('status');
-        const category = params.get('category');
-        const author = params.get('author');
-        const institution = params.get('institution');
-        const research_type = params.get('research_type');
-        const search = params.get('search');
-        const limit = parseInt(params.get('limit')) || mockPapers.length;
-        const offset = parseInt(params.get('offset')) || 0;
-        const sort_by = params.get('sort_by') || 'submission_date';
-        const sort_order = params.get('sort_order') || 'desc';
-        
-        // Filter papers based on parameters
-        let filteredPapers = [...mockPapers];
-        
-        if (status) {
-          filteredPapers = filteredPapers.filter(paper => 
-            paper.status.toLowerCase() === status.toLowerCase()
-          );
-        }
-        
-        if (category) {
-          filteredPapers = filteredPapers.filter(paper => 
-            paper.categories.some(cat => 
-              cat.toLowerCase().includes(category.toLowerCase())
-            )
-          );
-        }
-        
-        if (author) {
-          filteredPapers = filteredPapers.filter(paper => 
-            paper.author.toLowerCase().includes(author.toLowerCase()) ||
-            paper.co_authors.some(coAuthor => 
-              coAuthor.toLowerCase().includes(author.toLowerCase())
-            )
-          );
-        }
-        
-        if (institution) {
-          filteredPapers = filteredPapers.filter(paper => 
-            paper.institution.toLowerCase().includes(institution.toLowerCase())
-          );
-        }
-        
-        if (research_type) {
-          filteredPapers = filteredPapers.filter(paper => 
-            paper.research_type.toLowerCase() === research_type.toLowerCase()
-          );
-        }
-        
-        if (search) {
-          const searchLower = search.toLowerCase();
-          filteredPapers = filteredPapers.filter(paper => 
-            paper.title.toLowerCase().includes(searchLower) ||
-            paper.abstract.toLowerCase().includes(searchLower) ||
-            paper.keywords.some(keyword => 
-              keyword.toLowerCase().includes(searchLower)
-            )
-          );
-        }
-        
-        // Sort papers
-        filteredPapers.sort((a, b) => {
-          let aValue, bValue;
-          
-          switch (sort_by) {
-            case 'title':
-              aValue = a.title;
-              bValue = b.title;
-              break;
-            case 'author':
-              aValue = a.author;
-              bValue = b.author;
-              break;
-            case 'citations':
-              aValue = a.citations;
-              bValue = b.citations;
-              break;
-            case 'publication_date':
-              aValue = a.publication_date || '1900-01-01';
-              bValue = b.publication_date || '1900-01-01';
-              break;
-            default: // submission_date
-              aValue = a.submission_date;
-              bValue = b.submission_date;
-          }
-          
-          if (typeof aValue === 'string') {
-            return sort_order === 'desc' ? bValue.localeCompare(aValue) : aValue.localeCompare(bValue);
-          } else {
-            return sort_order === 'desc' ? bValue - aValue : aValue - bValue;
-          }
-        });
-        
-        // Apply pagination
-        const totalCount = filteredPapers.length;
-        const paginatedPapers = filteredPapers.slice(offset, offset + limit);
-        
-        // Generate summary statistics
-        const statusCounts = {
-          published: filteredPapers.filter(p => p.status === 'published').length,
-          'under-review': filteredPapers.filter(p => p.status === 'under-review').length,
-          'in-preparation': filteredPapers.filter(p => p.status === 'in-preparation').length
-        };
-        
-        const categoryCounts = {};
-        filteredPapers.forEach(paper => {
-          paper.categories.forEach(cat => {
-            categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
-          });
-        });
-        
         const response = {
           success: true,
-          data: paginatedPapers,
-          pagination: {
-            total_count: totalCount,
-            returned_count: paginatedPapers.length,
-            offset: offset,
-            limit: limit,
-            has_more: offset + limit < totalCount
-          },
-          filters_applied: {
-            status: status || null,
-            category: category || null,
-            author: author || null,
-            institution: institution || null,
-            research_type: research_type || null,
-            search: search || null
-          },
-          sorting: {
-            sort_by: sort_by,
-            sort_order: sort_order
-          },
-          summary: {
-            status_distribution: statusCounts,
-            category_distribution: categoryCounts,
-            total_citations: filteredPapers.reduce((sum, paper) => sum + paper.citations, 0)
-          },
-          available_filters: {
-            statuses: ['published', 'under-review', 'in-preparation', 'draft'],
-            research_types: ['observational', 'meta-analysis', 'survey', 'surveillance', 'modeling', 'longitudinal', 'intervention', 'case-study'],
-            categories: ['Infectious Disease', 'Urban Health', 'Vector-borne Disease', 'Global Health', 'Immunization', 'Rural Health', 'Antimicrobial Resistance', 'Healthcare-associated Infections', 'Climate Health', 'Mental Health', 'Pandemic Response', 'Digital Health', 'Tuberculosis', 'Food Safety', 'Genomic Epidemiology']
-          },
+          data: mockPapers,
+          count: mockPapers.length,
           message: "Research papers retrieved successfully",
           timestamp: timestamp
         };
-        
         res.writeHead(200);
         res.end(JSON.stringify(response, null, 2));
         return;
