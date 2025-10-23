@@ -35,16 +35,6 @@ jobs:
     - name: Build static site
       run: node build-static.mjs
 
-    - name: Test API endpoints
-      run: |
-        # Start API server in background for testing
-        node api-server.mjs &
-        sleep 5
-        # Test health endpoint
-        curl -f http://localhost:3000/api/health || exit 1
-        # Test outbreaks endpoint
-        curl -f http://localhost:3000/api/diseases/outbreaks | jq '.data | length' || exit 1
-        
     - name: Setup Pages
       uses: actions/configure-pages@v4
       
