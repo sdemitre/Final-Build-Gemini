@@ -43,7 +43,7 @@ Your enhanced Public Health Research Platform is now accessible to the global re
 
 ### **Method 1: Direct GitHub Pages** ✅ **LIVE**
 ```
-https://sdemitre.github.io/Final-Build/
+https://sdemitre.github.io/Final-Build-Gemini/
 ```
 - Primary deployment URL
 - Automatically updated via GitHub Actions
@@ -51,7 +51,7 @@ https://sdemitre.github.io/Final-Build/
 
 ### **Method 2: Alternative Path** ✅ **AVAILABLE**
 ```
-https://sdemitre.github.io/Final-Build/dist/
+https://sdemitre.github.io/Final-Build-Gemini/dist/
 ```
 - Alternative access path
 - Same content and functionality
@@ -59,7 +59,7 @@ https://sdemitre.github.io/Final-Build/dist/
 
 ### **Method 3: GitHub Repository** ✅ **PUBLIC**
 ```
-https://github.com/sdemitre/Final-Build
+https://github.com/sdemitre/Final-Build-Gemini
 ```
 - Source code access
 - Development history
@@ -116,8 +116,8 @@ https://github.com/sdemitre/Final-Build
 - **Performance**: Optimized for fast loading
 - **Compatibility**: Cross-browser and mobile responsive
 
-### **✅ Deployment Pipeline**
-- **Source**: GitHub repository (sdemitre/Final-Build)
+-### **✅ Deployment Pipeline**
+- **Source**: GitHub repository (sdemitre/Final-Build-Gemini)
 - **Build**: Automated via GitHub Actions workflow
 - **Deploy**: GitHub Pages automatic deployment
 - **Update**: Real-time updates on git push
