@@ -4,7 +4,7 @@
 
 **Primary URL**: ✅ https://sdemitre.github.io/Final-Build-Gemini/
 **Alternative URL**: ✅ https://sdemitre.github.io/Final-Build-Gemini/dist/
-**Repository**: 📂 https://github.com/sdemitre/Final-Build  
+**Repository**: 📂 https://github.com/sdemitre/Final-Build-Gemini
 
 **Deployment Status**: 🟢 **FULLY OPERATIONAL**  
 **Last Updated**: October 23, 2025 - 4:15 PM UTC  
@@ -111,7 +111,7 @@
 
 ### **🔗 Quick Share Links**
 ```
-🌍 Enhanced Disease Surveillance Platform
+� Enhanced Disease Surveillance Platform
 🦠 40 Global Disease Outbreaks - Live Online
 🌐 https://sdemitre.github.io/Final-Build-Gemini/
 📊 Interactive mapping with advanced filtering
@@ -125,7 +125,7 @@ Dear Colleagues,
 
 Our Enhanced Disease Surveillance Platform is now live and accessible worldwide:
 
-🌐 Live Website: https://sdemitre.github.io/Final-Build/
+🌐 Live Website: https://sdemitre.github.io/Final-Build-Gemini/
 🦠 Coverage: 40 global disease outbreaks with real-time data
 🗺️ Features: Interactive mapping, advanced filtering, professional visualization
 📊 Data: Africa (11), Asia (15), Americas (8), Europe (6) outbreaks

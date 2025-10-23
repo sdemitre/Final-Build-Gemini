@@ -53,7 +53,7 @@ Final-Build-Gemini/
 1. **Connect Repository to Netlify**
    - Go to [netlify.com](https://netlify.com)
    - Click "New site from Git"
-  - Select your GitHub repository: `sdemitre/Final-Build` (Final-Build-Gemini)
+  - Select your GitHub repository: `sdemitre/Final-Build-Gemini`
    - Configure build settings:
      - **Build Command**: `node build-static.mjs`
      - **Publish Directory**: `dist`
