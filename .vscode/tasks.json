@@ -81,6 +81,13 @@
 			"type": "shell",
 			"command": "node build-static.mjs",
 			"group": "build"
+		},
+		{
+			"label": "Start Local Development",
+			"type": "shell",
+			"command": "npm run dev",
+			"isBackground": true,
+			"group": "build"
 		}
 	]
 }
