@@ -85,6 +85,86 @@ const mockOutbreaks = [
   }
 ];
 
+// Mock users data
+const mockUsers = [
+  {
+    id: 1,
+    email: "sarah.johnson@university.edu",
+    name: "Dr. Sarah Johnson",
+    institution: "University Medical Center",
+    specialization: "Epidemiology",
+    role: "researcher",
+    verified: true,
+    papers_count: 15,
+    collaborations_count: 8
+  },
+  {
+    id: 2,
+    email: "michael.chen@globalhealth.org",
+    name: "Dr. Michael Chen",
+    institution: "Global Health Institute",
+    specialization: "Infectious Diseases",
+    role: "researcher",
+    verified: true,
+    papers_count: 22,
+    collaborations_count: 12
+  }
+];
+
+// Mock jobs data
+const mockJobs = [
+  {
+    id: 1,
+    title: "Senior Epidemiologist",
+    organization: "World Health Organization",
+    location: "Geneva, Switzerland",
+    type: "full-time",
+    salary_range: "$80,000 - $120,000",
+    description: "Leading epidemiological research on infectious disease outbreaks...",
+    requirements: ["PhD in Epidemiology", "5+ years experience", "Statistical analysis skills"],
+    posted_date: "2024-10-15",
+    deadline: "2024-11-15"
+  },
+  {
+    id: 2,
+    title: "Public Health Data Analyst",
+    organization: "Centers for Disease Control",
+    location: "Atlanta, USA",
+    type: "contract",
+    salary_range: "$60,000 - $85,000",
+    description: "Analyzing disease surveillance data and creating visualizations...",
+    requirements: ["MS in Public Health", "Python/R experience", "Data visualization skills"],
+    posted_date: "2024-10-10",
+    deadline: "2024-11-30"
+  }
+];
+
+// Mock collaborations data
+const mockCollaborations = [
+  {
+    id: 1,
+    title: "Global Malaria Surveillance Network",
+    description: "Multi-country collaboration tracking malaria trends across Africa",
+    lead_researcher: "Dr. Sarah Johnson",
+    participants: 15,
+    institutions: ["University Medical Center", "WHO", "African Health Institute"],
+    status: "active",
+    start_date: "2024-01-15",
+    end_date: "2025-01-15"
+  },
+  {
+    id: 2,
+    title: "COVID-19 Long-term Effects Study",
+    description: "Longitudinal study on long COVID symptoms across multiple populations",
+    lead_researcher: "Dr. Michael Chen",
+    participants: 8,
+    institutions: ["Global Health Institute", "European CDC", "Asian Health Network"],
+    status: "recruiting",
+    start_date: "2024-06-01",
+    end_date: "2026-06-01"
+  }
+];
+
 const indexHTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -213,6 +293,27 @@ const indexHTML = `<!DOCTYPE html>
                     <div class="api-response" id="outbreaks-response">Loading outbreaks...</div>
                     <a href="/api/diseases/outbreaks" class="btn" target="_blank">View Outbreaks API</a>
                 </div>
+
+                <div class="api-demo">
+                    <h3>👥 Researchers API</h3>
+                    <p>Browse the global network of public health researchers:</p>
+                    <div class="api-response" id="users-response">Loading researchers...</div>
+                    <a href="/api/users" class="btn" target="_blank">View Users API</a>
+                </div>
+
+                <div class="api-demo">
+                    <h3>💼 Jobs API</h3>
+                    <p>Discover career opportunities in public health:</p>
+                    <div class="api-response" id="jobs-response">Loading jobs...</div>
+                    <a href="/api/jobs" class="btn" target="_blank">View Jobs API</a>
+                </div>
+
+                <div class="api-demo">
+                    <h3>🤝 Collaborations API</h3>
+                    <p>Active research collaborations worldwide:</p>
+                    <div class="api-response" id="collaborations-response">Loading collaborations...</div>
+                    <a href="/api/collaborations" class="btn" target="_blank">View Collaborations API</a>
+                </div>
             </div>
         </section>
     </main>
@@ -242,11 +343,30 @@ const indexHTML = `<!DOCTYPE html>
                 const outbreaksData = await outbreaksResponse.json();
                 document.getElementById('outbreaks-response').textContent = JSON.stringify(outbreaksData, null, 2);
 
+                // Users/Researchers
+                const usersResponse = await fetch('/api/users');
+                const usersData = await usersResponse.json();
+                document.getElementById('users-response').textContent = JSON.stringify(usersData, null, 2);
+
+                // Jobs
+                const jobsResponse = await fetch('/api/jobs');
+                const jobsData = await jobsResponse.json();
+                document.getElementById('jobs-response').textContent = JSON.stringify(jobsData, null, 2);
+
+                // Collaborations
+                const collaborationsResponse = await fetch('/api/collaborations');
+                const collaborationsData = await collaborationsResponse.json();
+                document.getElementById('collaborations-response').textContent = JSON.stringify(collaborationsData, null, 2);
+
             } catch (error) {
                 console.error('Error loading API data:', error);
-                document.getElementById('health-response').textContent = 'Error: ' + error.message;
-                document.getElementById('papers-response').textContent = 'Error: ' + error.message;
-                document.getElementById('outbreaks-response').textContent = 'Error: ' + error.message;
+                const errorMsg = 'Error: ' + error.message;
+                document.getElementById('health-response').textContent = errorMsg;
+                document.getElementById('papers-response').textContent = errorMsg;
+                document.getElementById('outbreaks-response').textContent = errorMsg;
+                document.getElementById('users-response').textContent = errorMsg;
+                document.getElementById('jobs-response').textContent = errorMsg;
+                document.getElementById('collaborations-response').textContent = errorMsg;
             }
         }
 
@@ -319,6 +439,10 @@ const server = createServer(async (req, res) => {
           endpoints: {
             papers: '/api/papers',
             outbreaks: '/api/diseases/outbreaks',
+            users: '/api/users',
+            jobs: '/api/jobs',
+            collaborations: '/api/collaborations',
+            auth: '/api/auth',
             health: '/api/health'
           },
           server: {
@@ -326,6 +450,126 @@ const server = createServer(async (req, res) => {
             platform: process.platform,
             memory_usage: process.memoryUsage()
           }
+        };
+        res.writeHead(200);
+        res.end(JSON.stringify(response, null, 2));
+        return;
+      }
+
+      // Authentication endpoints
+      if (url === '/api/auth/login' && method === 'POST') {
+        console.log('Serving login API');
+        const response = {
+          success: true,
+          message: "Login successful",
+          token: "mock_jwt_token_12345",
+          user: {
+            id: 1,
+            email: "researcher@example.com",
+            name: "Dr. John Researcher",
+            role: "researcher"
+          },
+          timestamp: timestamp
+        };
+        res.writeHead(200);
+        res.end(JSON.stringify(response, null, 2));
+        return;
+      }
+
+      if (url === '/api/auth/register' && method === 'POST') {
+        console.log('Serving register API');
+        const response = {
+          success: true,
+          message: "Registration successful",
+          user: {
+            id: Date.now(),
+            email: "new.researcher@example.com",
+            name: "New Researcher",
+            role: "researcher"
+          },
+          timestamp: timestamp
+        };
+        res.writeHead(201);
+        res.end(JSON.stringify(response, null, 2));
+        return;
+      }
+
+      // Users endpoint
+      if (url === '/api/users' && method === 'GET') {
+        console.log('Serving users API');
+        const response = {
+          success: true,
+          data: mockUsers,
+          count: mockUsers.length,
+          message: "Users retrieved successfully",
+          timestamp: timestamp
+        };
+        res.writeHead(200);
+        res.end(JSON.stringify(response, null, 2));
+        return;
+      }
+
+      // Jobs endpoint
+      if (url === '/api/jobs' && method === 'GET') {
+        console.log('Serving jobs API');
+        const response = {
+          success: true,
+          data: mockJobs,
+          count: mockJobs.length,
+          message: "Jobs retrieved successfully",
+          timestamp: timestamp
+        };
+        res.writeHead(200);
+        res.end(JSON.stringify(response, null, 2));
+        return;
+      }
+
+      // Collaborations endpoint
+      if (url === '/api/collaborations' && method === 'GET') {
+        console.log('Serving collaborations API');
+        const response = {
+          success: true,
+          data: mockCollaborations,
+          count: mockCollaborations.length,
+          message: "Collaborations retrieved successfully",
+          timestamp: timestamp
+        };
+        res.writeHead(200);
+        res.end(JSON.stringify(response, null, 2));
+        return;
+      }
+
+      // Paper submission endpoint
+      if (url === '/api/papers' && method === 'POST') {
+        console.log('Serving paper submission API');
+        const response = {
+          success: true,
+          message: "Paper submitted successfully",
+          paper_id: Date.now(),
+          status: "under-review",
+          timestamp: timestamp
+        };
+        res.writeHead(201);
+        res.end(JSON.stringify(response, null, 2));
+        return;
+      }
+
+      // User profile endpoint
+      if (url.startsWith('/api/users/') && method === 'GET') {
+        console.log('Serving user profile API');
+        const userId = url.split('/')[3];
+        const response = {
+          success: true,
+          data: {
+            id: userId,
+            email: "researcher@example.com",
+            name: "Dr. Research Example",
+            institution: "Example University",
+            specialization: "Epidemiology",
+            papers_count: 5,
+            collaborations_count: 3
+          },
+          timestamp: timestamp
         };
         res.writeHead(200);
         res.end(JSON.stringify(response, null, 2));

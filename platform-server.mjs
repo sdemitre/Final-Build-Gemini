@@ -409,6 +409,9 @@ const indexHTML = `
 const server = createServer(async (req, res) => {
   const { method, url } = req;
   
+  // Log all requests for debugging
+  console.log(`${new Date().toISOString()} - ${method} ${url}`);
+  
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -416,6 +419,7 @@ const server = createServer(async (req, res) => {
 
   // Handle preflight requests
   if (method === 'OPTIONS') {
+    console.log('CORS preflight request handled');
     res.writeHead(200);
     res.end();
     return;
@@ -463,9 +467,11 @@ const server = createServer(async (req, res) => {
       }
 
       // API endpoint not found
+      console.log(`❌ API endpoint not found: ${url}`);
       res.writeHead(404);
       res.end(JSON.stringify({
         error: 'API endpoint not found',
+        requested: url,
         available_endpoints: ['/api/papers', '/api/diseases/outbreaks', '/api/health']
       }));
       return;
@@ -493,17 +499,17 @@ const server = createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, '127.0.0.1', () => {
+server.listen(PORT, () => {
   console.log('========================================');
   console.log('  PUBLIC HEALTH RESEARCH PLATFORM');
   console.log('========================================');
   console.log('');
   console.log('✅ Development server running!');
   console.log('');
-  console.log('🌐 Platform URL: http://localhost:' + PORT);
-  console.log('📊 API Health: http://localhost:' + PORT + '/api/health');
-  console.log('📄 Papers API: http://localhost:' + PORT + '/api/papers');
-  console.log('🦠 Outbreaks API: http://localhost:' + PORT + '/api/diseases/outbreaks');
+  console.log(`🌐 Platform URL: http://localhost:${PORT}`);
+  console.log(`📊 API Health: http://localhost:${PORT}/api/health`);
+  console.log(`📄 Papers API: http://localhost:${PORT}/api/papers`);
+  console.log(`🦠 Outbreaks API: http://localhost:${PORT}/api/diseases/outbreaks`);
   console.log('');
   console.log('🚀 Ready for public health research collaboration!');
   console.log('');
@@ -516,6 +522,23 @@ server.listen(PORT, '127.0.0.1', () => {
   console.log('');
   console.log('Press Ctrl+C to stop the server');
   console.log('========================================');
+});
+
+// Enhanced error handling
+server.on('error', (error) => {
+  console.error('❌ Server error:', error.message);
+  if (error.code === 'EADDRINUSE') {
+    console.log(`⚠️  Port ${PORT} is already in use. Trying port ${PORT + 1}...`);
+    server.listen(PORT + 1);
+  }
+});
+
+process.on('SIGINT', () => {
+  console.log('\n👋 Shutting down Public Health Research Platform server...');
+  server.close(() => {
+    console.log('✅ Server closed successfully');
+    process.exit(0);
+  });
 });
 
 export default server;
